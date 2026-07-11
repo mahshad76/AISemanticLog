@@ -45,6 +45,7 @@ dependencies {
     implementation(projects.feature.detail)
     implementation(projects.core.network)
     implementation(projects.core.threading)
+    implementation(projects.core.common)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
