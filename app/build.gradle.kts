@@ -41,7 +41,10 @@ android {
 
 dependencies {
     // internal projects
+    implementation(projects.feature.home)
+    implementation(projects.feature.detail)
     implementation(projects.core.network)
+    implementation(projects.core.threading)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)

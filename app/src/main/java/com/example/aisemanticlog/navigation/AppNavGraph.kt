@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.example.home.presentation.navigation.HomeRoute
+import com.example.home.presentation.navigation.homeScreen
 
 @Composable
 fun AppNavGraph(
@@ -12,9 +14,9 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "",
+        startDestination = HomeRoute,
         modifier = modifier
     ) {
-
+        homeScreen { }
     }
 }

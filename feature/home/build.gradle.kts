@@ -26,6 +26,10 @@ android {
 }
 
 dependencies {
+    // projects
+    implementation(projects.core.threading)
+    implementation(projects.core.network)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
