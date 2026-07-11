@@ -9,7 +9,6 @@ private const val LOGS_ENDPOINT =
     "v0/b/fieldinspectiondev.firebasestorage.app/o/data%2Flogs_5k.json"
 
 private const val ALT_QUERY = "alt"
-private const val TOKEN_QUERY = "token"
 private const val MEDIA_QUERY_VALUE = "media"
 
 interface ApiService {
@@ -17,9 +16,6 @@ interface ApiService {
     @GET(LOGS_ENDPOINT)
     suspend fun fetchLogs(
         @Query(ALT_QUERY)
-        alt: String = MEDIA_QUERY_VALUE,
-
-        @Query(TOKEN_QUERY)
-        token: String = BuildConfig.API_KEY
+        alt: String = MEDIA_QUERY_VALUE
     ): Response<List<LogsResponseDto>>
 }
