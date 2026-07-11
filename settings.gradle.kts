@@ -23,4 +23,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "AISemanticLog"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
+include(":feature:home")
+include(":feature:detail")
+include(":core:network")
