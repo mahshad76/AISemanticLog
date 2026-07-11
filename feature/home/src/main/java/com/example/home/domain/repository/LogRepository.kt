@@ -4,7 +4,7 @@ import com.example.home.domain.model.Log
 
 internal interface LogRepository {
     /**
-     * Returns list of logs
+     * Returns log
      */
-    suspend fun fetchLogs(): Result<List<Log>>
+    suspend fun fetchLogs(): Result<Log>
 }

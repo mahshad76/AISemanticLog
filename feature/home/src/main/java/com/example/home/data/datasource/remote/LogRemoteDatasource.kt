@@ -5,7 +5,7 @@ import retrofit2.Response
 
 internal interface LogRemoteDatasource {
     /**
-     * Returns list of logs
+     * Returns log
      */
-    suspend fun fetchLogs(): Response<List<LogsResponseDto>>
+    suspend fun fetchLogs(): Response<LogsResponseDto>
 }

@@ -12,7 +12,7 @@ fun LogsResponseDto.toLog(): Log =
     Log(
         totalCount = this.totalCount ?: 0,
         sessionId = this.sessionId ?: "",
-        data = this.data?.map { it.toLogEntry() } ?: emptyList<LogEntry>()
+        data = this.data?.map { it.toLogEntry() } ?: emptyList()
     )
 
 fun LogEntryDto.toLogEntry(): LogEntry = LogEntry(

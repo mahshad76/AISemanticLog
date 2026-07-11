@@ -2,7 +2,6 @@ package com.example.di
 
 import com.example.network.ApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.example.interceptor.ApiKeyInterceptor
 import com.example.network.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -31,18 +30,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiKeyInterceptor(): ApiKeyInterceptor {
-        return ApiKeyInterceptor(BuildConfig.API_KEY)
-    }
-
-    @Provides
-    @Singleton
     fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor,
-        apiKeyInterceptor: ApiKeyInterceptor
+        loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(apiKeyInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)

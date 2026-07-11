@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -20,7 +21,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         val properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
-        buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
+        buildConfigField("String", "FIREBASE_DOWNLOAD_TOKEN", "\"${properties.getProperty("FIREBASE_DOWNLOAD_TOKEN")}\"")
         buildConfigField("String", "BASE_URL", "\"https://firebasestorage.googleapis.com/\"")
     }
     compileOptions {

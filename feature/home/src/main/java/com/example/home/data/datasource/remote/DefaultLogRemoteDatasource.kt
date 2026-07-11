@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 internal class DefaultLogRemoteDatasource @Inject constructor(private val apiService: ApiService) :
     LogRemoteDatasource {
-    override suspend fun fetchLogs(): Response<List<LogsResponseDto>> = apiService.fetchLogs()
+    override suspend fun fetchLogs(): Response<LogsResponseDto> = apiService.fetchLogs()
 }

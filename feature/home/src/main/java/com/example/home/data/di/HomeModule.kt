@@ -2,6 +2,10 @@ package com.example.home.data.di
 
 import com.example.home.data.datasource.remote.DefaultLogRemoteDatasource
 import com.example.home.data.datasource.remote.LogRemoteDatasource
+import com.example.home.data.repository.DefaultLogRepository
+import com.example.home.domain.repository.LogRepository
+import com.example.home.domain.usecase.DefaultFetchLogUseCase
+import com.example.home.domain.usecase.FetchLogUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +21,13 @@ abstract class HomeModule {
         defaultLogRemoteDatasource:
         DefaultLogRemoteDatasource
     ): LogRemoteDatasource
+
+    @Binds
+    internal abstract fun bindLogRepository(
+        defaultLogRepository: DefaultLogRepository
+    ): LogRepository
+
+    @Binds
+    internal abstract fun bindFetchLogUseCase(defaultFetchLogUseCase: DefaultFetchLogUseCase):
+            FetchLogUseCase
 }

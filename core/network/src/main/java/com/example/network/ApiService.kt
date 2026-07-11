@@ -10,12 +10,14 @@ private const val LOGS_ENDPOINT =
 
 private const val ALT_QUERY = "alt"
 private const val MEDIA_QUERY_VALUE = "media"
+private const val TOKEN_QUERY = "token"
 
 interface ApiService {
-
     @GET(LOGS_ENDPOINT)
     suspend fun fetchLogs(
         @Query(ALT_QUERY)
-        alt: String = MEDIA_QUERY_VALUE
-    ): Response<List<LogsResponseDto>>
+        alt: String = MEDIA_QUERY_VALUE,
+        @Query(TOKEN_QUERY)
+        token: String = BuildConfig.FIREBASE_DOWNLOAD_TOKEN
+    ): Response<LogsResponseDto>
 }
