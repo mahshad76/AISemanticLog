@@ -8,7 +8,7 @@ import com.example.home.R
 import com.example.home.domain.model.LogEntry
 import com.example.home.domain.model.LogGroup
 import com.example.home.domain.model.SeverityGroup
-import com.example.home.domain.usecase.DefaultFetchLogUseCase
+import com.example.home.domain.usecase.FetchLogUseCase
 import com.example.threading.qualifiers.DefaultDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    private val fetchLogUseCase: DefaultFetchLogUseCase,
+    private val fetchLogUseCase: FetchLogUseCase,
     private val stringResolver: StringResolver,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {

@@ -40,7 +40,7 @@ dependencies {
 
     // Network
     api(libs.retrofit)
-    implementation(libs.okhttp)
+    api(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)

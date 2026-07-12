@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.core.threading)
     implementation(projects.core.network)
     implementation(projects.core.common)
+    implementation(projects.core.testing.unit)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
