@@ -52,4 +52,36 @@ class DefaultLogRepositoryTest {
             assertThat(networkError.code).isEqualTo(errorCode)
             assertThat(networkError.message).isEqualTo(errorBody)
         }
+
+    @Test
+    fun `fetchLogs returns NoDataError when response body is null`() =
+        runTest(dispatcher.scheduler) {
+            val expectedErrorMessage = "Response body is null"
+            coEvery { datasource.fetchLogs() } returns Response.success(null)
+            coEvery { stringResolver.findString(any()) } returns expectedErrorMessage
+
+            val result = repository.fetchLogs()
+
+            assertThat(result.isFailure).isTrue()
+            val failure = result.exceptionOrNull()
+            assertThat(failure).isInstanceOf(RepositoryError.NoDataError::class.java)
+            val noDataError = failure as RepositoryError.NoDataError
+            assertThat(noDataError.message).isEqualTo(expectedErrorMessage)
+        }
+
+    @Test
+    fun `fetchLogs returns UnknownError on unexpected exception`() =
+        runTest(dispatcher.scheduler) {
+            val expectedErrorMessage = "Unexpected error during network call"
+            val exception = Exception(expectedErrorMessage)
+            coEvery { datasource.fetchLogs() } throws exception
+
+            val result = repository.fetchLogs()
+
+            assertThat(result.isFailure).isTrue()
+            val failure = result.exceptionOrNull()
+            assertThat(failure).isInstanceOf(RepositoryError.UnknownError::class.java)
+            val unknownError = failure as RepositoryError.UnknownError
+            assertThat(unknownError.cause?.message).isEqualTo(expectedErrorMessage)
+        }
 }
