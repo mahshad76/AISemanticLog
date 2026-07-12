@@ -11,7 +11,7 @@ data class LogEntry(
 enum class SeverityGroup(val label: String) {
     DEBUG("Debug"),
     INFO("Info"),
-    WARN("Warning"),
+    WARN("Warn"),
     ERROR("Error"),
     FATAL("Fatal"),
     UNKNOWN("Unknown");
@@ -24,8 +24,7 @@ enum class SeverityGroup(val label: String) {
                 ?: return UNKNOWN
 
             return entries.firstOrNull { severity ->
-                severity.name == normalizedValue ||
-                        severity.label.uppercase() == normalizedValue
+                severity.label.uppercase() == normalizedValue
             } ?: UNKNOWN
         }
     }

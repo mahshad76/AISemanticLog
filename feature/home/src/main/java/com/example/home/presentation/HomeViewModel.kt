@@ -7,8 +7,11 @@ import com.example.common.stringresolver.StringResolver
 import com.example.home.R
 import com.example.home.domain.model.LogEntry
 import com.example.home.domain.model.LogGroup
+import com.example.home.domain.model.SeverityGroup
 import com.example.home.domain.usecase.DefaultFetchLogUseCase
+import com.example.threading.qualifiers.DefaultDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,6 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -25,7 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val fetchLogUseCase: DefaultFetchLogUseCase,
-    private val stringResolver: StringResolver
+    private val stringResolver: StringResolver,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Idle)
     val homeUiState = _homeUiState.asStateFlow()
@@ -46,31 +51,47 @@ internal class HomeViewModel @Inject constructor(
 
     val filteredLogs = combine(homeUiState, debouncedSearchQuery) { uiState, query ->
         if (uiState is HomeUiState.Success) {
-            filterLogs(uiState.logs, query)
+            filterLogs(uiState.logs, query).let {
+                it.map { group ->
+                    val severityPercentages = group.entries.analyzeSeverityPercentage()
+                    group.copy(severityPercentages = severityPercentages)
+                }
+            }
         } else {
             emptyList<LogGroup>()
         }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = emptyList()
-    )
+    }
+        .flowOn(defaultDispatcher)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList()
+        )
 
     private fun filterLogs(
         logs: List<LogGroup>,
         query: String
     ): List<LogGroup> {
         if (query.isBlank()) return logs
-
         return logs.mapNotNull { group ->
-            val filteredEntries = group.entries.filter { entry ->
-                entry.matchesQuery(query)
-            }
-
+            val filteredEntries = group.entries
+                .filter { entry ->
+                    entry.matchesQuery(query)
+                }
+            // Remove group if no match found
             group
                 .takeIf { filteredEntries.isNotEmpty() }
                 ?.copy(entries = filteredEntries)
         }
+    }
+
+    private fun List<LogEntry>.analyzeSeverityPercentage(): Map<SeverityGroup, Float> {
+        if (this.isEmpty()) return emptyMap()
+        val totalCount = this.size.toFloat()
+        return this.groupBy { it.severity }
+            .mapValues { (_, entriesOfSeverity) ->
+                entriesOfSeverity.size / totalCount
+            }
     }
 
     private fun LogEntry.matchesQuery(query: String): Boolean =
