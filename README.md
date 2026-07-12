@@ -1,24 +1,58 @@
 https://github.com/user-attachments/assets/a671cd01-0f4e-4edb-844f-313582f304ac
 
-# Project Requirements
-Before running the app please put your token in the local.properties file like FIREBASE_DOWNLOAD_TOKEN=YOUR_TOKEN.
+```
+# 🛠️ Project Requirements
 
-# Project Overview
-This project is a Jetpack Compose application that displays a searchable list of log entries. Users can search for specific logs and view detailed information about each entry on a separate screen. The logs are grouped by date and a severity indicator in the header visualizes the distribution of log severity levels within the corresponding filtered results.
-The app is built with a modern Android tech stack, leveraging dependency injection, a modular architecture, and network communication for data fetching.
+Before running the app, you need to add your Firebase token to your local properties file. Open your `local.properties` file in the root directory and append the following line:
 
-# Architecture
-The application follows a clean architecture and a modular project structure, separating the codebase into distinct modules based on functionality. This approach enhances scalability, testability, and team collaboration.
+FIREBASE_DOWNLOAD_TOKEN=YOUR_TOKEN
 
-# Modularization
-- app: The main application module that orchestrates the other modules. 
-- core: Contains foundational code shared across the application, including: common: Utility classes and shared resources. network: Handles all API interactions using Retrofit and OkHttp. testing: Test utilities and shared testing dependencies. threading: Manages coroutine dispatchers.
-- feature: Houses feature-specific code, with each feature being self-contained. home: Manages the log list and search screen. detail: Manages the log detail screen.
+---
 
-# Core Libraries
-Jetpack Compose: For a declarative UI. Hilt: For dependency injection, simplifying the management of dependencies. Retrofit: A type-safe HTTP client for making API calls. Kotlinx Serialization: A powerful serialization library for parsing JSON data from the network. Coroutines: For asynchronous programming and managing background tasks. Jetpack Navigation: To manage in-app navigation between screens.
+# 📝 Project Overview
 
+This project is a modern Jetpack Compose application designed to display a searchable list of log entries. 
 
+### Key Features
+* Advanced Log Search: Users can filter and search for specific logs in real time.
+* Detail View: Tap on any log entry to view comprehensive contextual data on a dedicated detail screen.
+* Smart Grouping & Analytics: Logs are dynamically grouped by date. A custom severity indicator in the header visualizes the distribution of log severity levels within your filtered results.
+
+The application is built on a robust, enterprise-grade Android stack leveraging modular architecture, strict dependency injection, and reliable network pipelines.
+
+---
+
+# 🏗️ Architecture & Modularization
+
+The application strictly follows Clean Architecture principles and is broken down into self-contained, isolated feature and core modules. This enforces a separation of concerns, improves build times, and ensures high testability.
+
+### Module Breakdown
+
+* :app
+  * The orchestrator module. It handles global application initialization, Hilt dependency graphs, and top-level navigation routing.
+* :core
+  * :common — Foundational utility classes, domain base models, and shared resources.
+  * :network — Handles remote data sources, API definitions, and HTTP client configurations.
+  * :testing — Shared test runners, Mocks, and common testing utilities.
+  * :threading — Dispatches scoped Coroutine contexts throughout the app uniformly.
+* :feature
+  * :home — Manages the UI, ViewModels, and state management for the log listing and search screen.
+  * :detail — Encapsulates the user experience, layout, and logic for inspecting individual log entries.
+
+---
+
+# 📚 Core Libraries
+
+| Library | Purpose |
+| :--- | :--- |
+| Jetpack Compose | Modern, declarative UI framework for building responsive layouts. |
+| Hilt | Compile-time dependency injection framework to simplify architecture and testing. |
+| Retrofit + OkHttp | Type-safe HTTP client wrapper used to handle network communication and data fetching. |
+| Kotlinx Serialization | Type-safe, compiler-plugin driven JSON parsing for network payloads. |
+| Coroutines & Flow | First-class asynchronous programming paradigm for managing background tasks and non-blocking reactive data streams. |
+| Jetpack Navigation | Type-safe Compose-destination routing to manage screen transitions seamlessly. |
+
+```
 
 
 
