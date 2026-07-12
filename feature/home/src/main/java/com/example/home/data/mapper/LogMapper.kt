@@ -2,6 +2,7 @@ package com.example.home.data.mapper
 
 import com.example.home.domain.model.Log
 import com.example.home.domain.model.LogEntry
+import com.example.home.domain.model.LogGroup
 import com.example.home.domain.model.LogMetadata
 import com.example.home.domain.model.LogMetadata.Companion.DEFAULT
 import com.example.home.domain.model.SeverityGroup
@@ -13,12 +14,23 @@ fun LogsResponseDto.toLog(): Log =
     Log(
         totalCount = this.totalCount ?: 0,
         sessionId = this.sessionId ?: "",
-        data = this.data?.map { it.toLogEntry() } ?: emptyList()
+        data = this.data?.groupBy { logEntry ->
+            logEntry.timestamp?.substringBefore('T')
+        }
+            ?.map { (timestamp, entries) ->
+                LogGroup(
+                    timestamp = timestamp ?: "",
+                    entries = entries.map { it.toLogEntry() }
+                )
+            }
+            ?.sortedByDescending { group ->
+                group.timestamp
+            }
+            ?: emptyList()
     )
 
 fun LogEntryDto.toLogEntry(): LogEntry = LogEntry(
     id = this.id ?: "",
-    timestamp = this.timestamp ?: "",
     severity = SeverityGroup.from(this.severity),
     tag = this.tag ?: "",
     message = this.message ?: "",

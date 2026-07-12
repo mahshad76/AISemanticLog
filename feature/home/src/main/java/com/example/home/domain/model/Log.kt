@@ -6,5 +6,5 @@ import kotlinx.serialization.SerialName
 data class Log(
     val totalCount: Int,
     val sessionId: String,
-    val data: List<LogEntry>
+    val data: List<LogGroup>
 )

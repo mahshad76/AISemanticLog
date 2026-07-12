@@ -2,6 +2,7 @@ package com.example.home.presentation
 
 import androidx.compose.runtime.Immutable
 import com.example.home.domain.model.LogEntry
+import com.example.home.domain.model.LogGroup
 
 internal sealed interface HomeUiState {
 
@@ -9,7 +10,7 @@ internal sealed interface HomeUiState {
      * Represents the success state, where the log is available.
      */
     @Immutable
-    data class Success(val logs: List<LogEntry>) : HomeUiState
+    data class Success(val logs: List<LogGroup>) : HomeUiState
 
     /**
      * Represents the error state, where an error occurred while fetching the data.

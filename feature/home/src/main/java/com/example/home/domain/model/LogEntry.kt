@@ -2,7 +2,6 @@ package com.example.home.domain.model
 
 data class LogEntry(
     var id: String,
-    var timestamp: String,
     var severity: SeverityGroup,
     var tag: String,
     var message: String,

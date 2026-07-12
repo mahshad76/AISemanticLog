@@ -22,7 +22,6 @@ data class DetailRoute(
 @Serializable
 data class DetailUiModel(
     var id: String,
-    var timestamp: String,
     var severity: String,
     var tag: String,
     var message: String,

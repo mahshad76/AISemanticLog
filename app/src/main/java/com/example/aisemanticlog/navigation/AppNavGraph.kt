@@ -25,7 +25,6 @@ fun AppNavGraph(
             navController.navigateToDetails(
                 DetailUiModel(
                     id = logEntry.id,
-                    timestamp = logEntry.timestamp,
                     severity = logEntry.severity.label,
                     tag = logEntry.tag,
                     message = logEntry.message,

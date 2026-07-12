@@ -21,32 +21,68 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.home.domain.model.LogEntry
+import com.example.home.domain.model.LogGroup
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun LogsList(
-    logs: List<LogEntry>,
+    logs: List<LogGroup>,
     navigateToDetail: (LogEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 300.dp),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = modifier.fillMaxSize()
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        items(
-            key = { item -> item.id },
-            items = logs
-        ) { log ->
-            LogItem(
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth(),
-                log = log,
-                navigateToDetail = navigateToDetail
-            )
+        logs.forEach { group ->
+            stickyHeader {
+                TimestampHeader(
+                    timestamp = group.timestamp, modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                )
+            }
+
+            items(
+                items = group.entries,
+                key = { entry -> entry.id }
+            ) { entry ->
+                LogItem(
+                    log = entry,
+                    navigateToDetail = navigateToDetail,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun TimestampHeader(
+    timestamp: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 4.dp
+    ) {
+        Text(
+            text = timestamp,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 10.dp
+            )
+        )
     }
 }
 
@@ -57,23 +93,36 @@ private fun LogItem(
     modifier: Modifier = Modifier
 ) {
     Card(
+        onClick = { navigateToDetail(log) },
+        modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
-        modifier = modifier
-            .clickable(onClick = { navigateToDetail(log) })
-            .clip(MaterialTheme.shapes.small)
-            .height(IntrinsicSize.Min),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         )
     ) {
-        Column(modifier = Modifier.padding(10.dp)) {
-            Text(text = log.tag, style = MaterialTheme.typography.titleMedium)
-            Text(text = log.message)
-            Text(log.severity.label)
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.padding(12.dp)
+        ) {
+            Text(
+                text = log.tag,
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Text(
+                text = log.message,
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Text(
+                text = log.severity.label,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
         }
     }
 }
