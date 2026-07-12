@@ -25,16 +25,16 @@ The application follows a clean architecture and a modular project structure, se
 
 ### Module Breakdown
 
-* :app
+* app:
   * The main application module that orchestrates the other modules.
-* :core
-  * :common — Utility classes and shared resources.
-  * :network — Handles all API interactions using Retrofit and OkHttp.
-  * :testing — Test utilities and shared testing dependencies.
-  * :threading — Manages coroutine dispatchers.
-* :feature
-  * :home —  Manages the log list and search screen.
-  * :detail — Manages the log detail screen.
+* core:
+  * common: — Utility classes and shared resources.
+  * network: — Handles all API interactions using Retrofit and OkHttp.
+  * testing: — Test utilities and shared testing dependencies.
+  * threading: — Manages coroutine dispatchers.
+* feature:
+  * home: —  Manages the log list and search screen.
+  * detail: — Manages the log detail screen.
 
 
 # 📚 Core Libraries
