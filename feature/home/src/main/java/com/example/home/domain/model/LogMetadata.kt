@@ -1,7 +1,5 @@
 package com.example.home.domain.model
 
-import kotlinx.serialization.SerialName
-
 data class LogMetadata(
     val latencyMs: Int,
     val isAiGenerated: Boolean

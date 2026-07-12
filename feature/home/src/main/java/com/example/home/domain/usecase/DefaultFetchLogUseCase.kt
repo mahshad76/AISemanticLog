@@ -1,6 +1,5 @@
 package com.example.home.domain.usecase
 
-import com.example.home.domain.model.Log
 import com.example.home.domain.repository.LogRepository
 import javax.inject.Inject
 

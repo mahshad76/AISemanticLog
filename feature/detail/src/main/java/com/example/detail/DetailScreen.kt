@@ -15,7 +15,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.detail.navigation.DetailRoute
 import com.example.detail.navigation.DetailUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)

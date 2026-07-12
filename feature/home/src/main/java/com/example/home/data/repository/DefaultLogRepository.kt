@@ -7,7 +7,6 @@ import com.example.home.data.datasource.remote.LogRemoteDatasource
 import com.example.home.data.mapper.toLog
 import com.example.home.domain.model.Log
 import com.example.home.domain.repository.LogRepository
-import com.example.model.LogsResponseDto
 import com.example.threading.qualifiers.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
