@@ -1,16 +1,12 @@
 package com.example.home.presentation
 
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.stringresolver.StringResolver
 import com.example.home.R
-import com.example.home.data.repository.DefaultLogRepository
 import com.example.home.domain.model.LogEntry
-import com.example.home.domain.repository.LogRepository
 import com.example.home.domain.usecase.DefaultFetchLogUseCase
-import com.example.home.domain.usecase.FetchLogUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -46,15 +42,26 @@ internal class HomeViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
-    private fun filterLogs(logs: List<LogEntry>, query: String) =
-        logs.filter { log ->
-            val normalizedQuery = query.trim()
-            log.id.contains(normalizedQuery, ignoreCase = true) ||
-                    log.timestamp.contains(normalizedQuery, ignoreCase = true) ||
-                    log.severity.contains(normalizedQuery, ignoreCase = true) ||
-                    log.tag.contains(normalizedQuery, ignoreCase = true) ||
-                    log.message.contains(normalizedQuery, ignoreCase = true)
+    private fun filterLogs(
+        logs: List<LogEntry>,
+        query: String
+    ): List<LogEntry> {
+        val normalizedQuery = query.trim()
+
+        if (normalizedQuery.isBlank()) return logs
+
+        return logs.filter { log ->
+            listOf(
+                log.id,
+                log.timestamp,
+                log.severity.label,
+                log.tag,
+                log.message
+            ).any { value ->
+                value.contains(normalizedQuery, ignoreCase = true)
+            }
         }
+    }
 
     fun clearSearchQuery() {
         _searchQuery.value = ""
@@ -116,7 +123,7 @@ internal class HomeViewModel @Inject constructor(
                 consumeErrorMessage()
             }
 
-            is HomeEvent.GetCharacters -> {
+            is HomeEvent.GetLogs -> {
                 getLogs()
             }
 

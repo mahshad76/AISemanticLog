@@ -7,7 +7,7 @@ internal sealed interface HomeEvent {
     /**
      * Represents an event to fetch the list of logs
      */
-    data object GetCharacters : HomeEvent
+    data object GetLogs : HomeEvent
 
     /**
      * Represents an event to consume and clear any existing error messages

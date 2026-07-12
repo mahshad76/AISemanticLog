@@ -4,6 +4,7 @@ import com.example.home.domain.model.Log
 import com.example.home.domain.model.LogEntry
 import com.example.home.domain.model.LogMetadata
 import com.example.home.domain.model.LogMetadata.Companion.DEFAULT
+import com.example.home.domain.model.SeverityGroup
 import com.example.model.LogEntryDto
 import com.example.model.LogMetadataDto
 import com.example.model.LogsResponseDto
@@ -18,7 +19,7 @@ fun LogsResponseDto.toLog(): Log =
 fun LogEntryDto.toLogEntry(): LogEntry = LogEntry(
     id = this.id ?: "",
     timestamp = this.timestamp ?: "",
-    severity = this.severity ?: "",
+    severity = SeverityGroup.from(this.severity),
     tag = this.tag ?: "",
     message = this.message ?: "",
     metadata = this.metadata?.toLogMetaData() ?: DEFAULT

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_general">Something went wrong</string>
+    <string name="search_hint">Search log</string>
+    <string name="title">Search Logs</string>
+    <string name="close">Close</string>
+    <string name="search">Search</string>
 </resources>
