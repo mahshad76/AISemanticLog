@@ -1,4 +1,4 @@
-https://github.com/user-attachments/assets/d5864270-648a-496d-9229-ade2b64aca72
+https://github.com/user-attachments/assets/18b4232c-2a6e-465e-b189-de57c2a25b1c
 
 # 🛠️ Project Requirements
 
