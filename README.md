@@ -1,4 +1,4 @@
-https://github.com/user-attachments/assets/560d4c0b-ad4e-4cbb-bc92-527a2d654ae5
+https://github.com/user-attachments/assets/d5864270-648a-496d-9229-ade2b64aca72
 
 # 🛠️ Project Requirements
 
@@ -14,7 +14,7 @@ This project is a modern Jetpack Compose application designed to display a searc
 ### Key Features
 * Log Search: Users can filter and search for specific logs in real time.
 * Detail View: Tap on any log entry to view contextual data on a dedicated detail screen.
-* Smart Grouping & Analytics: Logs are dynamically grouped by date. A custom severity indicator in the header visualizes the distribution of log severity levels within your filtered results.
+* Smart Grouping & Analytics: Logs are dynamically grouped by date. A custom severity indicator in the header visualizes the distribution of log severity levels within each group of your filtered results.
 
 The app is built with a modern Android tech stack, leveraging dependency injection, a modular architecture, and network communication for data fetching.
 
